@@ -1,0 +1,9 @@
+/docker/mysql/data/
+/docker/mysql/logs/
+/docker/mysql/tmp/
+/docker/mysql/*.pid
+
+/docker/phpmyadmin/sessions/
+
+.DS_Store
+Thumbs.db

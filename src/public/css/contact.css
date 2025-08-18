@@ -1,0 +1,137 @@
+body {
+    margin: 0;
+    font-family: sans-serif;
+    color: #333;
+    line-height: 1.6;
+    background-color: #fff;
+}
+
+/* ヘッダーとタイトル */
+header {
+    padding: 20px;
+    border-bottom: 1px solid #ccc;
+    text-align: center;
+    font-size: 24px;
+}
+
+.fl-title {
+    text-align: center;
+    font-size: 24px;
+    margin: 24px 0;
+}
+
+.fl-container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* ===== 入力フォーム（create） ===== */
+.row {
+    margin-bottom: 16px;
+}
+
+label {
+    display: block;
+    margin-bottom: 6px;
+}
+
+.req {
+    color: #d23;
+    margin-left: 4px;
+}
+
+input[type="text"],
+input[type="email"],
+textarea,
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    font-size: 14px;
+}
+
+.inline {
+    display: flex;
+    gap: 10px;
+}
+
+.inline>* {
+    flex: 1;
+}
+
+.tel {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.err {
+    color: #d23;
+    font-size: 13px;
+    margin-top: 4px;
+}
+
+/* ボタン */
+.actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+button,
+.btn {
+    border: none;
+    padding: 8px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.btn-primary {
+    background-color: #8a7566;
+    color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .08);
+}
+
+.btn-muted {
+    background-color: #eee;
+    color: #333;
+    border: 1px solid #ccc;
+}
+
+/* ===== 確認画面（confirm） ===== */
+.confirm-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 0 20px;
+    border: 1px solid #eee;
+    background-color: #fff;
+}
+
+.confirm-table th,
+.confirm-table td {
+    padding: 14px;
+    border-bottom: 1px solid #f1f1f1;
+    vertical-align: top;
+}
+
+.confirm-table th {
+    width: 28%;
+    background-color: #8a7566;
+    color: #fff;
+    text-align: left;
+    font-weight: bold;
+}
+
+.btn-link {
+    background: none;
+    border: none;
+    color: #0b61d8;
+    padding: 0;
+    text-decoration: underline;
+    cursor: pointer;
+}
