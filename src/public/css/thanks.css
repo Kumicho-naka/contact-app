@@ -1,0 +1,82 @@
+body {
+    margin: 0;
+    font-family: sans-serif;
+    color: #333;
+    line-height: 1.6;
+    background: #fff;
+}
+
+/* 画面中央配置 */
+.thanks {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 20px;
+}
+
+/* 背景の透かし */
+.thanks__bg {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(64px, 18vw, 240px);
+    color: #000;
+    opacity: .06;
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
+}
+
+/* パネル */
+.thanks__panel {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    background: transparent !important;
+    padding: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.thanks__message {
+    margin: 0 0 16px;
+    font-size: 20px;
+    color: #6f5d52;
+}
+
+/* --- 見出し系にセリフ体を適用 --- */
+.thanks__bg,
+.thanks__message,
+.thanks .btn {
+    font-family: Georgia, "Times New Roman", Times, serif;
+    letter-spacing: .2px;
+}
+
+.thanks__bg {
+    font-weight: 700;
+}
+
+.thanks__message {
+    font-weight: 700;
+}
+
+/* ボタン */
+.btn {
+    display: inline-block;
+    border: none;
+    padding: 10px 22px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.btn-primary {
+    background: #8a7566;
+    color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .08);
+}

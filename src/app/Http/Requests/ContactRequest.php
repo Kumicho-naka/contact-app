@@ -3,81 +3,70 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ContactRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
     public function authorize(): bool
     {
         return true;
     }
 
-    /**
-     * バリデーション前処理
-     * tel1/tel2/tel3を結合して tel に格納
-     */
-
     protected function prepareForValidation(): void
     {
-        $tel1 = (string) $this->input('tel1', '');
-        $tel2 = (string) $this->input('tel2', '');
-        $tel3 = (string) $this->input('tel3', '');
+        $norm = fn($v) => preg_replace('/\s+/u', '', mb_convert_kana((string)$v, 'n'));
+
+        $tel1 = $norm($this->input('tel1', ''));
+        $tel2 = $norm($this->input('tel2', ''));
+        $tel3 = $norm($this->input('tel3', ''));
 
         $this->merge([
-            'tel' => $tel1 . $tel2 . $tel3,
+            'tel1' => $tel1,
+            'tel2' => $tel2,
+            'tel3' => $tel3,
+            'tel'  => $tel1 . $tel2 . $tel3, // 確認画面や保存で使いたければ利用可
         ]);
     }
 
-
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
     public function rules(): array
     {
         return [
-            'last_name'   => ['required', 'string', 'max:255'],
-            'first_name'  => ['required', 'string', 'max:255'],
-            'gender'      => ['required', 'in:1,2,3'],
+            'last_name'   => ['bail','required','string','max:255'],
+            'first_name'  => ['bail','required','string','max:255'],
+            'gender'      => ['bail','required','in:1,2,3'],
 
-            'email'       => ['required', 'email', 'max:255'],
+            'email'       => ['bail','required','email','max:255'],
 
-            // 各欄5桁までの半角数字
-            'tel1'        => ['required', 'regex:/^\d{1,5}$/'],
-            'tel2'        => ['required', 'regex:/^\d{1,5}$/'],
-            'tel3'        => ['required', 'regex:/^\d{1,5}$/'],
+            // 電話は各欄 1〜5 桁の半角数字
+            'tel1'        => ['bail','required','regex:/^\d{1,5}$/'],
+            'tel2'        => ['bail','required','regex:/^\d{1,5}$/'],
+            'tel3'        => ['bail','required','regex:/^\d{1,5}$/'],
 
-            'address'     => ['required', 'string', 'max:255'],
-            'building'    => ['nullable', 'string', 'max:255'],
+            'address'     => ['bail','required','string','max:255'],
+            'building'    => ['nullable','string','max:255'],
 
-            'category_id' => [
-                'required',
-                'integer',
-                Rule::notIn(['0', '']),
-                'exists:categories,id',
-            ],
+            'category_id' => ['bail','required','integer', Rule::notIn(['0','']), 'exists:categories,id'],
 
-            'detail'      => ['required', 'string', 'max:120'],
+            'detail'      => ['bail','required','string','max:120'],
         ];
     }
 
-     public function messages(): array
+    public function messages(): array
     {
         return [
+            // 氏名
             'last_name.required'   => '姓を入力してください',
             'first_name.required'  => '名を入力してください',
 
+            // 性別
             'gender.required'      => '性別を選択してください',
             'gender.in'            => '性別を選択してください',
 
+            // メール
             'email.required'       => 'メールアドレスを入力してください',
             'email.email'          => 'メールアドレスはメール形式で入力してください',
 
+            // 電話（未入力・形式）
             'tel1.required'        => '電話番号を入力してください',
             'tel2.required'        => '電話番号を入力してください',
             'tel3.required'        => '電話番号を入力してください',
@@ -85,12 +74,15 @@ class ContactRequest extends FormRequest
             'tel2.regex'           => '電話番号は5桁までの数字で入力してください',
             'tel3.regex'           => '電話番号は5桁までの数字で入力してください',
 
+            // 住所
             'address.required'     => '住所を入力してください',
 
+            // 種類
             'category_id.required' => 'お問い合わせの種類を選択してください',
             'category_id.not_in'   => 'お問い合わせの種類を選択してください',
             'category_id.exists'   => 'お問い合わせの種類を選択してください',
 
+            // 内容
             'detail.required'      => 'お問い合わせ内容を入力してください',
             'detail.max'           => 'お問い合わせ内容は120文字以内で入力してください',
         ];

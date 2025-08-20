@@ -55,19 +55,20 @@ class ContactController extends Controller
         $data = $request->validated();
 
         Contact::create([
-            'last_name'     => $data['last_name'],
-            'first_name'    => $data['first_name'],
-            'gender'        => (int) $data['gender'],
-            'email'         => $data['email'],
-            'tel'           => $data['tel'], // tel1+tel2+tel3 の結合値
-            'address'       => $data['address'],
-            'building'      => $data['building'] ?? null,
-            'category_id'   => (int) $data['category_id'],
-            'detail'        => $data['detail'],
+            'last_name'   => $data['last_name'],
+            'first_name'  => $data['first_name'],
+            'gender'      => (int) $data['gender'],
+            'email'       => $data['email'],
+            'tel'         => $data['tel1'] . $data['tel2'] . $data['tel3'], // ← ここで結合
+            'address'     => $data['address'],
+            'building'    => $data['building'] ?? null,
+            'category_id' => (int) $data['category_id'],
+            'detail'      => $data['detail'],
         ]);
 
         return redirect()->route('contact.thanks');
     }
+
 
     /**
      * サンクスページ（GET /thanks）

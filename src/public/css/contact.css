@@ -1,137 +1,241 @@
-body {
-    margin: 0;
-    font-family: sans-serif;
-    color: #333;
-    line-height: 1.6;
-    background-color: #fff;
-}
+/* ========== 入力画面 ========== */
 
-/* ヘッダーとタイトル */
-header {
-    padding: 20px;
-    border-bottom: 1px solid #ccc;
-    text-align: center;
-    font-size: 24px;
-}
-
-.fl-title {
-    text-align: center;
-    font-size: 24px;
-    margin: 24px 0;
-}
-
-.fl-container {
-    max-width: 860px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-/* ===== 入力フォーム（create） ===== */
+/* 1行＝ラベル + 入力域（field） */
 .row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
     margin-bottom: 16px;
 }
 
-label {
-    display: block;
-    margin-bottom: 6px;
+.row label {
+    width: 180px;
+    font-weight: bold;
+    color: #6f5d52;
+    padding-top: 6px;
 }
 
+/* 入力域を縦積み（入力欄 → エラー）にする器 */
+.field {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.field>.err {
+    /* 入力の直下に出す */
+    margin-top: 6px;
+}
+
+/* 入力系のベース */
+.row>.field>input,
+.row>.field>select,
+.row>.field>textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background: #f9f9f9;
+    font-size: 14px;
+}
+
+/* 必須印 */
 .req {
     color: #d23;
     margin-left: 4px;
 }
 
-input[type="text"],
-input[type="email"],
-textarea,
-select {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: #f9f9f9;
-    font-size: 14px;
-}
-
+/* お名前（2分割） */
 .inline {
     display: flex;
     gap: 10px;
 }
 
 .inline>* {
-    flex: 1;
+    flex: 1 1 0;
+    min-width: 0;
 }
 
-.tel {
+/* 性別（横並び） */
+.radio-group {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+}
+
+.radio-group label {
     display: flex;
     align-items: center;
     gap: 6px;
+    font-weight: normal;
+    color: #6f5d52;
 }
 
-.err {
-    color: #d23;
-    font-size: 13px;
-    margin-top: 4px;
+.radio-group input[type=radio] {
+    accent-color: #8a7566;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
 }
 
-/* ボタン */
+/* 電話番号（3分割 + ハイフン）：
+   右端を他項目と揃えるため、fieldの幅いっぱいにグリッドで配分 */
+.tel {
+    width: 100%;
+    display: grid;
+    grid-template-columns: minmax(90px, 1fr) auto minmax(90px, 1fr) auto minmax(90px, 1fr);
+    column-gap: 8px;
+    align-items: center;
+}
+
+.tel input {
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background: #f9f9f9;
+    font-size: 14px;
+}
+
+.sep {
+    display: inline-block;
+    text-align: center;
+    padding: 0 2px;
+    color: #6f5d52;
+}
+
+/* ボタン行 */
 .actions {
     display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    margin-top: 20px;
+    justify-content: center;
+    gap: 18px;
+    margin-top: 22px;
 }
 
 button,
 .btn {
+    display: inline-block;
     border: none;
-    padding: 8px 20px;
-    cursor: pointer;
-    border-radius: 4px;
+    padding: 10px 22px;
+    border-radius: 6px;
     font-size: 14px;
+    line-height: 1;
+    cursor: pointer;
 }
 
 .btn-primary {
-    background-color: #8a7566;
+    background: #8a7566;
     color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, .08);
 }
 
-.btn-muted {
-    background-color: #eee;
+.btn-link {
+    background: #eee;
     color: #333;
-    border: 1px solid #ccc;
 }
 
-/* ===== 確認画面（confirm） ===== */
+/* テキストエリア高さ */
+textarea {
+    height: 140px;
+}
+
+/* エラーメッセージの色など */
+.err {
+    color: #d23;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+/* ========== 確認画面（テーブル） ========== */
 .confirm-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 0 0 20px;
-    border: 1px solid #eee;
-    background-color: #fff;
+    width: 920px;
+    max-width: 100%;
+    margin: 0 auto 24px;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: #fff;
+    border: 1px solid #e5ded6;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, .06);
+    border-radius: 8px;
 }
 
 .confirm-table th,
 .confirm-table td {
-    padding: 14px;
-    border-bottom: 1px solid #f1f1f1;
-    vertical-align: top;
+    padding: 16px 20px;
+    border-bottom: 1px solid #eee;
+    vertical-align: middle;
+    line-height: 1.6;
+    word-break: break-word;
 }
 
+/* 左側の見出しカラム */
 .confirm-table th {
-    width: 28%;
-    background-color: #8a7566;
+    width: 230px;
+    background: #bda996;
     color: #fff;
+    font-weight: 700;
     text-align: left;
-    font-weight: bold;
+    letter-spacing: .02em;
 }
 
-.btn-link {
-    background: none;
-    border: none;
-    color: #0b61d8;
-    padding: 0;
-    text-decoration: underline;
-    cursor: pointer;
+/* 最終行のボーダーを消す */
+.confirm-table tr:last-child th,
+.confirm-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* 角丸 */
+.confirm-table tr:first-child th {
+    border-top-left-radius: 8px;
+}
+
+.confirm-table tr:first-child td {
+    border-top-right-radius: 8px;
+}
+
+.confirm-table tr:last-child th {
+    border-bottom-left-radius: 8px;
+}
+
+.confirm-table tr:last-child td {
+    border-bottom-right-radius: 8px;
+}
+
+/* ボタン行との間隔 */
+.actions {
+    margin-top: 18px;
+}
+
+/* 文字詰まりを防ぐ */
+.confirm-table td {
+    word-break: break-all;
+}
+
+/* スマホ時は“見出し→値”の縦積みレイアウトに切替 */
+@media (max-width: 640px) {
+
+    .confirm-table,
+    .confirm-table tbody,
+    .confirm-table tr,
+    .confirm-table th,
+    .confirm-table td {
+        display: block;
+        width: 100%;
+    }
+
+    .confirm-table th {
+        border-bottom: none;
+        border-radius: 0;
+        width: 100%;
+    }
+
+    .confirm-table td {
+        padding-top: 8px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid #eee;
+    }
+
+    .confirm-table tr:last-child td {
+        border-bottom: none;
+    }
 }

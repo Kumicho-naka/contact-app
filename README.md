@@ -16,8 +16,14 @@
 ## 使用技術 (実行環境)
 - PHP 8.1.33
 - Laravel 8.83.29
-- MariaDB 11.8.2
+- Nginx 1.21.1
+- MySQL 8.0.26
 - Docker / docker-compose
+- 認証: Laravel Fortify 1.19.1
+
+## テスト
+- PHPUnit
+- テストDB: SQLite (pdo_sqlite / sqlite3 有効)
 
 ## ER図
 ![ER図](./docs/erd.png)

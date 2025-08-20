@@ -2,8 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
-use App\Http\Controllers\Admin\ContactAdminController;
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Admin\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,20 +17,18 @@ use App\Http\Controllers\AuthController;
 |
 */
 
-// お問い合わせ（ユーザー側）
-Route::get('/', [ContactController::class, 'create']);          // 入力
-Route::post('/confirm', [ContactController::class, 'confirm']); // 確認
-
-// ※保存用の内部ルート(これがないとthanksに行かない)
-Route::post('/store', [ContactController::class, 'store']);     // 保存 → /thanks にリダイレクト
-Route::get('/thanks', [ContactController::class, 'thanks']);    // サンクスページ
+// お問い合わせ
+Route::get('/', [ContactController::class, 'create'])->name('contact.create');
+Route::post('/confirm', [ContactController::class, 'confirm'])->name('contact.confirm');
+Route::post('/store', [ContactController::class, 'store'])->name('contact.store');
+Route::get('/thanks', [ContactController::class, 'thanks'])->name('contact.thanks');
 
 // 管理画面
-Route::get('/admin', [ContactAdminController::class, 'index']);
+Route::middleware('auth')->group(function () {
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
+    Route::get('/admin/export', [AdminController::class, 'export'])->name('admin.export');
+    Route::delete('/admin/contacts/{contact}', [AdminController::class, 'destroy'])->name('admin.destroy');
+});
 
-// 認証
-Route::get('/register', [AuthController::class, 'showRegister']);
-Route::post('/register', [AuthController::class, 'register']);
-Route::get('/login', [AuthController::class, 'showLogin']);
-Route::post('/login', [AuthController::class, 'login']);
-Route::post('/logout', [AuthController::class, 'logout']);
+// ログアウト
+Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
